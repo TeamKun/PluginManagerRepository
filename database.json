@@ -3,5 +3,6 @@
   "ProtocolLib": "https://media.forgecdn.net/files/2972/67/ProtocolLib.jar",
   "NickNamer": "https://github.com/InventivetalentDev/NickNamer/releases/download/3.18.6-SNAPSHOT/NickNamer_v3.18.6-SNAPSHOT.jar",
   "PlugMan": "https://media.forgecdn.net/files/2861/749/PlugMan.jar",
-  "PacketListnerAPI": "https://github.com/InventivetalentDev/PacketListenerAPI"
+  "PacketListnerAPI": "https://github.com/InventivetalentDev/PacketListenerAPI",
+  "HolographicDisplay": "https://media.forgecdn.net/files/3179/624/HolographicDisplays.jar"
 }
