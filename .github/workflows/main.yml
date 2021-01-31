@@ -62,14 +62,6 @@ jobs:
           git config --global user.name "peyang-Celeron@BOT"
           git merge --allow-unrelated-histories -Xtheirs "origin/main"
           git add .
-      - name: Fetch API Data
-        if: "steps.split.outputs.name != '#CANNOT_PARSE_XD#'"
-        uses: JamesIves/fetch-api-data-action@releases/v1
-        with:
-          ENDPOINT: https://raw.githubusercontent.com/TeamKun/PluginManagerRepository/main/database.json
-          CONFIGURATION: '{ "method": "GET", "headers": {"Authorization": "token ${{ secrets.API_TOKEN }}"} }'
-          SAVE_NAME: "database"
-          SAVE_LOCATION: "./"
       - name: ls
         if: "steps.split.outputs.name != '#CANNOT_PARSE_XD#'"
         run: "ls && cat database.json"
