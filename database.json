@@ -1,5 +1,6 @@
 {
   "Vault": "https://media.forgecdn.net/files/3007/470/Vault.jar",
   "ProtocolLib": "https://media.forgecdn.net/files/2972/67/ProtocolLib.jar",
-  "NickNamer": "https://github.com/InventivetalentDev/NickNamer/releases/download/3.18.6-SNAPSHOT/NickNamer_v3.18.6-SNAPSHOT.jar"
+  "NickNamer": "https://github.com/InventivetalentDev/NickNamer/releases/download/3.18.6-SNAPSHOT/NickNamer_v3.18.6-SNAPSHOT.jar",
+  "PlugMan": "https://media.forgecdn.net/files/2861/749/PlugMan.jar"
 }
