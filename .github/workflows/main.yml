@@ -1,0 +1,126 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]a# This is a basic workflow to help you get started with Actions
+
+name: AutoAdd
+
+# Controls when the action will run. 
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  parse:
+    runs-on: [ubuntu-latest]
+    if: "contains(github.event.issue.labels.*.name, 'Automated') && github.event.issue.title == '{Request} Additional url into database.json'"
+    steps:
+      - name: "Split"
+        id: split
+        uses: actions/github-script@v3
+        with:
+          script: |
+            var oar = context.payload.issue.body.split('\n')[0];
+            oar = oar.substr(0, oar.length - 1);
+            const id = oar.split(",");
+            if (id.length >= 2)
+            {
+              var out = "";
+              for (var i = 0; i < id.length; i++)
+              {
+                if (i == 0)
+                  core.setOutput('name', id[0]);
+                else if (i == 1)
+                  out = id[1];
+                else
+                  out = out + "," + id[i]
+              }
+              core.setOutput("url", out);
+            }
+            else
+            {
+              core.setOutput('name', "#CANNOT_PARSE_XD#")
+              core.setOutput('url', "#CANNOT_PARSE_XDXD#")
+            }
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Your request has reviewed and handled! Please update and restart the plugin.'
+            });            
+            github.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });            
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure git
+        if: "steps.split.outputs.name != '#CANNOT_PARSE_XD#'"
+        run: |
+          sudo apt -y update
+          sudo apt -y install jq
+          git config --global user.email "42040068+peyang-Celeron@users.noreply.github.com"
+          git config --global user.name "peyang-Celeron@BOT"
+          git merge --allow-unrelated-histories -Xtheirs "origin/main"
+          git add .
+      - name: Fetch API Data
+        if: "steps.split.outputs.name != '#CANNOT_PARSE_XD#'"
+        uses: JamesIves/fetch-api-data-action@releases/v1
+        with:
+          ENDPOINT: https://raw.githubusercontent.com/peyang-Celeron/TranslateTester/main/repo.json
+          CONFIGURATION: '{ "method": "GET", "headers": {"Authorization": "token ${{ secrets.API_TOKEN }}"} }'
+          SAVE_NAME: "database"
+          SAVE_LOCATION: "./"
+      - name: ls
+        if: "steps.split.outputs.name != '#CANNOT_PARSE_XD#'"
+        run: "ls && cat database.json"
+      - name: Update my-file.json description
+        if: "steps.split.outputs.name != '#CANNOT_PARSE_XD#'"
+        run: "cat database.json | jq '. |= .+{\"${{steps.split.outputs.name}}\":\"${{steps.split.outputs.url}}\"}' > database2.json"
+      - name: mv
+        run: "rm database.json"
+      - name: mv
+        run: "mv database2.json database.json"
+      - name: Commit changes
+        if: "steps.split.outputs.name != '#CANNOT_PARSE_XD#'"
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: "peyang-Celeron@bot"
+          author_email: "42040068+peyang-Celeron@users.noreply.github.com"
+          message: "Apply request"
+          signoff: true
+
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
