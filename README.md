@@ -5,7 +5,7 @@ Github Actionsで自動化されています。
 ## 注意
 1.15.2向けプラグインですので、1.15.2の依存関係を追加してください。
 ## 追加方法
-+ Issue templateから`\{REQUEST\} Additional url into database.json` を選びます。
++ [こ↑こ↓](https://github.com/TeamKun/PluginManagerRepository/issues/new?assignees=&labels=Automated&template=-request--additional-url-into-database-json.md&title=%7BRequest%7D+Additional+url+into+database.json)まで飛びます。
 + タイトルは何も変更せずに、本文に、コンマ区切りのエントリを貼ります。
 ### エントリの記述方法
 ```
