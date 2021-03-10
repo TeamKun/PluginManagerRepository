@@ -6,5 +6,6 @@
   "PacketListnerAPI": "https://github.com/InventivetalentDev/PacketListenerAPI",
   "HolographicDisplay": "https://media.forgecdn.net/files/3179/624/HolographicDisplays.jar",
   "AdvancedTeleport": "https://github.com/Niestrat99/AT-Rewritten",
-  "ActionbarAPI": "https://github.com/TeamKun/PluginManagerRepository/raw/main/artifacts/ActionbarAPI.jar"
+  "ActionbarAPI": "https://github.com/TeamKun/PluginManagerRepository/raw/main/artifacts/ActionbarAPI.jar",
+  "NoteBlockAPI": "https://www.spigotmc.org/resources/noteblockapi.19287/"
 }
