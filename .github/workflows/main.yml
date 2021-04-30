@@ -6,12 +6,52 @@ name: AutoAdd
 on:
   issues:
     types: [opened]
+  
 
 jobs:
   parse:
     runs-on: [ubuntu-latest]
     if: "contains(github.event.issue.labels.*.name, 'Automated') && github.event.issue.title == '{Request} Additional url into database.json'"
     steps:
+      - name: "Fetch members"
+        uses: octokit/request-action@v2.0.2
+        id: pc
+        with:
+          route: GET /orgs/TeamKUN/members
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Permisson check"
+        id: pac
+        uses: actions/github-script@v3
+        with:
+          script: |
+            var json = ${{ steps.pc.outputs.data }}
+            var b = [];
+            json.forEach((a) =>{
+                b += a.login;
+            });
+            console.log(context.payload.sender.login);
+            var includ = b.includes(context.payload.sender.login);
+            core.setOutput('abort', includ);
+            if (!includ)
+            {
+              github.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: 'You do not have permission to do this.'
+              });            
+              github.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                state: 'closed'
+              });
+            }
+            
+      - name: "Abort"
+        if: "steps.pac.outputs.abort == 'false'"
+        uses: andymckay/cancel-action@0.2
       - name: "Split"
         id: split
         uses: actions/github-script@v3
