@@ -7,5 +7,6 @@
   "HolographicDisplay": "https://media.forgecdn.net/files/3179/624/HolographicDisplays.jar",
   "AdvancedTeleport": "https://github.com/Niestrat99/AT-Rewritten",
   "ActionbarAPI": "https://github.com/TeamKun/PluginManagerRepository/raw/main/artifacts/ActionbarAPI.jar",
-  "WorldEdit": "https://dev.bukkit.org/projects/worldedit/files/3283695"
+  "WorldEdit": "https://dev.bukkit.org/projects/worldedit/files/3283695",
+  "u": "https://github.com/TeamKun/KPMUpdater"
 }
